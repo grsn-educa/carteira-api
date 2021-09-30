@@ -10,6 +10,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import br.com.alura.carteira.modelo.TipoTransacao;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,5 +35,8 @@ public class TransacaoFormDto {
 
 	@NotNull
 	private TipoTransacao tipo;
+        
+        @JsonAlias("usuario_id")
+        private Long usuarioId;
 
 }

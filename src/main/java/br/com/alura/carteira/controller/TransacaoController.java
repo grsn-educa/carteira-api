@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.service.TransacaoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 @RestController
 @RequestMapping("/transacoes")
@@ -23,8 +26,8 @@ public class TransacaoController {
 	private TransacaoService service;
 
 	@GetMapping
-	public List<TransacaoDto> listar() {
-		return service.listar();
+	public Page<TransacaoDto> listar(@PageableDefault(size = 10) Pageable paginacao) {
+		return service.listar(paginacao);
 	}
 
 	@PostMapping

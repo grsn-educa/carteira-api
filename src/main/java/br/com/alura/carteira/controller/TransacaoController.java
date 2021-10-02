@@ -14,25 +14,33 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.service.TransacaoService;
+import java.net.URI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/transacoes")
 public class TransacaoController {
 
-	@Autowired
-	private TransacaoService service;
+    @Autowired
+    private TransacaoService service;
 
-	@GetMapping
-	public Page<TransacaoDto> listar(@PageableDefault(size = 10) Pageable paginacao) {
-		return service.listar(paginacao);
-	}
+    @GetMapping
+    public Page<TransacaoDto> listar(@PageableDefault(size = 10) Pageable paginacao) {
+        return service.listar(paginacao);
+    }
 
-	@PostMapping
-	public void cadastrar(@RequestBody @Valid TransacaoFormDto dto) {
-		service.cadastrar(dto);
-	}
+    @PostMapping
+    public ResponseEntity<TransacaoDto> cadastrar(@RequestBody @Valid TransacaoFormDto dto, UriComponentsBuilder uriBuilder) {
+        TransacaoDto transacaoDto = service.cadastrar(dto);
+        URI uri = uriBuilder
+                .path("/transacoes/{id}")
+                .buildAndExpand(transacaoDto.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(transacaoDto);
+    }
 
 }

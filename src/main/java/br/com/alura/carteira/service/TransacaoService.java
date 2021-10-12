@@ -30,22 +30,10 @@ public class TransacaoService {
     
     @Transactional  
     public TransacaoDto cadastrar(TransacaoFormDto dto) {
-        Transacao transacao = modelMapper.map(dto, Transacao.class);
-        transacao.setId(null);
-        transacaoRepository.save(transacao);
-        return modelMapper.map(transacao, TransacaoDto.class);
+        throw new NullPointerException("teste");
+//        Transacao transacao = modelMapper.map(dto, Transacao.class);
+//        transacao.setId(null);
+//        transacaoRepository.save(transacao);
+//        return modelMapper.map(transacao, TransacaoDto.class);
     }
 }
-        /*
-	private List<Transacao> transacoes = new ArrayList<>();
-	private ModelMapper modelMapper = new ModelMapper();
-
-	public List<TransacaoDto> listar() {
-		return transacoes.stream().map(t -> modelMapper.map(t, TransacaoDto.class)).collect(Collectors.toList());
-	}
-
-	public void cadastrar(TransacaoFormDto dto) {
-		Transacao transacao = modelMapper.map(dto, Transacao.class);
-		transacoes.add(transacao);
-	}
-        */
